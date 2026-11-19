@@ -1,7 +1,7 @@
 // Agencia Aster — interacciones
 
-// TODO: reemplazar por el número real de WhatsApp (formato internacional, sin + ni espacios)
-const WHATSAPP_NUMBER = '5493870000000';
+// WhatsApp de Agencia Aster: +54 9 3873 64-4198
+const WHATSAPP_NUMBER = '5493873644198';
 const WHATSAPP_MESSAGE = 'Hola Aster, quiero contarles sobre mi proyecto.';
 
 const waLink = (msg = WHATSAPP_MESSAGE) =>
@@ -63,4 +63,5 @@ faqs.forEach((d) => d.addEventListener('toggle', () => {
   if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; });
 }));
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
