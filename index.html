@@ -18,6 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Ms+Madi&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme-produccion.css">
 
   <!-- Datos estructurados (SEO / AEO / GEO) -->
   <script type="application/ld+json">
@@ -68,8 +69,39 @@
     <!-- 2. HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__bg" aria-hidden="true"></div>
+      <svg class="hero-drone" viewBox="-220 -90 440 260" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <linearGradient id="dbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2BD6"/><stop offset="1" stop-color="#04044A"/></linearGradient>
+          <linearGradient id="dbeam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00E7FF" stop-opacity=".7"/><stop offset="1" stop-color="#00E7FF" stop-opacity="0"/></linearGradient>
+        </defs>
+        <path class="beam" d="M-10 90 L-90 170 H90 L10 90 Z" fill="url(#dbeam)"/>
+        <g stroke="#00E7FF" stroke-width="3">
+          <path d="M-40 -2 L-150 -30 M40 -2 L150 -30" stroke-opacity=".6"/>
+          <path d="M-48 10 L-170 4 M48 10 L170 4"/>
+          <path d="M-150 -30 V-44 M150 -30 V-44 M-170 4 V-12 M170 4 V-12" />
+          <rect x="-180" y="4" width="20" height="12" rx="4" fill="#04044A"/>
+          <rect x="160" y="4" width="20" height="12" rx="4" fill="#04044A"/>
+        </g>
+        <g stroke="#FFFFFF" stroke-width="3" stroke-opacity=".85">
+          <ellipse class="prop" cx="-150" cy="-46" rx="58" ry="6" stroke-opacity=".45"/>
+          <ellipse class="prop" cx="150" cy="-46" rx="58" ry="6" stroke-opacity=".45"/>
+          <ellipse class="prop" cx="-170" cy="-14" rx="70" ry="8"/>
+          <ellipse class="prop" cx="170" cy="-14" rx="70" ry="8"/>
+        </g>
+        <rect x="-56" y="-20" width="112" height="50" rx="20" fill="url(#dbody)" stroke="#00E7FF" stroke-width="3"/>
+        <path d="M-30 -8 H30" stroke="#00A3FF" stroke-width="3"/>
+        <circle class="led-dot" cx="-40" cy="10" r="4" fill="#00E7FF"/>
+        <circle class="led-dot" cx="40" cy="10" r="4" fill="#FF3B5C"/>
+        <g stroke="#00E7FF" stroke-width="3">
+          <path d="M-36 30 L-62 78 M36 30 L62 78 M-78 78 H-46 M46 78 H78"/>
+          <path d="M0 30 V48"/>
+          <rect x="-24" y="48" width="48" height="36" rx="9" fill="#04044A"/>
+          <circle cx="0" cy="66" r="11"/>
+          <circle cx="0" cy="66" r="4" fill="#00E7FF"/>
+        </g>
+      </svg>
       <div class="container hero__inner">
-        <p class="eyebrow eyebrow--light">Agencia de marketing digital</p>
+        <p class="eyebrow eyebrow--light">Agencia de marketing digital <span class="rec">REC</span></p>
         <h1 id="hero-title" class="display">
           Marketing digital y contenido para empresas que quieren
           <span class="script">dejar de improvisar.</span>
@@ -496,5 +528,6 @@
   </a>
 
   <script src="main.js" defer></script>
+  <script src="fx.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,214 @@
+/* ==========================================================
+   Agencia Aster — Tema "Producción"
+   Fondo fijo con dron y equipo de grabación, recuadros
+   transparentes (vidrio) y luces LED animadas.
+   Se carga después de styles.css. Para volver al tema claro,
+   quitar este archivo y fx.js de los HTML.
+   ========================================================== */
+
+@property --led { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+:root {
+  --ink: #FFFFFF;
+  --muted: rgba(255, 255, 255, .72);
+  --line: rgba(255, 255, 255, .14);
+  --surface: rgba(255, 255, 255, .06);
+  --glass: rgba(10, 18, 110, .28);
+  --glass-strong: rgba(6, 10, 80, .55);
+  --glow: 0 0 6px var(--cyan), 0 0 18px rgba(0, 231, 255, .55);
+}
+
+body { background: var(--night); color: var(--ink); }
+
+/* ---------- Fondo fijo (equivalente a background-attachment: fixed, compatible con iOS) ---------- */
+.scene {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: var(--night) url("assets/bg-produccion.svg") center / cover no-repeat;
+}
+.scene::after { /* velo para que el texto siempre se lea */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 50% 40%, rgba(4,4,74,.15), rgba(4,4,74,.55));
+}
+.scene__orb {
+  position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(60px); opacity: .35;
+  background: radial-gradient(circle, var(--sky), transparent 65%);
+  animation: orb 22s ease-in-out infinite alternate;
+}
+.scene__orb--2 { right: -12vmax; bottom: -16vmax; background: radial-gradient(circle, var(--cyan), transparent 65%); opacity: .2; animation-duration: 28s; animation-direction: alternate-reverse; }
+.scene__orb--1 { left: -14vmax; top: -10vmax; }
+@keyframes orb { to { transform: translate(18vw, 22vh) scale(1.15); } }
+
+/* ---------- Secciones transparentes ---------- */
+.section, .services, .projects, .faq, .related, .trust, .ecosystem { background: transparent; position: relative; }
+.trust { border-bottom: 0; }
+.ecosystem::before { opacity: .6; }
+.hero__bg { opacity: .55; }
+.cta .hero__bg, .page-hero .hero__bg { opacity: .7; }
+.footer { background: rgba(4, 4, 74, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); position: relative; }
+
+/* ---------- Recuadros de vidrio transparentes ---------- */
+.pain, .service, .case, .quote, .post-card, .faq details, .post-cta, .flow li, .member__photo {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+.pain:hover, .service:hover, .post-card:hover, .quote:hover { background-color: rgba(20, 40, 160, .35); border-color: rgba(0, 231, 255, .4); }
+.service:hover, .post-card:hover { box-shadow: 0 0 0 1px rgba(0,231,255,.15), 0 24px 60px -20px rgba(0, 163, 255, .55); }
+.faq details[open] { border-color: rgba(0, 231, 255, .55); }
+.faq summary::after { background: rgba(255,255,255,.1); color: var(--white); }
+.faq details[open] summary::after { color: var(--night); }
+
+/* Textos que eran azul oscuro sobre blanco */
+.service__offer, .case__facts dt, .prose strong, .prose .lead { color: var(--cyan); }
+.tags li { background: rgba(0, 231, 255, .12); color: var(--white); border: 1px solid rgba(0,231,255,.25); }
+.marquee__track li { color: rgba(255, 255, 255, .38); }
+.step__n { background: rgba(4, 4, 74, .8); color: var(--white); border-color: var(--cyan); box-shadow: var(--glow); }
+.step:last-child .step__n { background: var(--sky); border-color: var(--cyan); }
+.member__photo { background: var(--glass); }
+.member__photo::after { background-image: url("assets/isotipo-white.png"); opacity: .18; }
+.ph--a { background: linear-gradient(150deg, rgba(1,9,120,.85), rgba(4,4,74,.6)); }
+.ph--b { background: linear-gradient(150deg, rgba(0,163,255,.75), rgba(1,9,120,.6)); }
+.ph--c { background: linear-gradient(150deg, rgba(0,231,255,.7), rgba(0,163,255,.5)); }
+
+/* Botones */
+.btn--primary { background: linear-gradient(90deg, var(--sky), #1268FF); color: var(--white); box-shadow: 0 0 0 1px rgba(0,231,255,.35), 0 10px 30px -10px rgba(0,163,255,.8); }
+.btn--primary:hover { background: var(--cyan); color: var(--night); }
+.btn--light, .btn--primary { position: relative; overflow: hidden; }
+.btn--light::after, .btn--primary::after { /* destello que recorre el botón */
+  content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
+  transform: skewX(-20deg); animation: shine 4.5s ease-in-out infinite;
+}
+@keyframes shine { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+
+/* Header siempre oscuro */
+.header.is-scrolled, .header.menu-open { background: rgba(4, 4, 74, .72); color: var(--white); box-shadow: 0 1px 0 rgba(0,231,255,.25); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.header.is-scrolled .brand__mark--dark, .header.is-scrolled .brand__word--dark,
+.header.menu-open .brand__mark--dark, .header.menu-open .brand__word--dark { display: none; }
+.header.is-scrolled .brand__mark--light, .header.is-scrolled .brand__word--light,
+.header.menu-open .brand__mark--light, .header.menu-open .brand__word--light { display: block; }
+.header.is-scrolled .nav__cta { background: var(--white); color: var(--blue); }
+@media (max-width: 900px) {
+  .nav { background: rgba(4, 4, 74, .94); color: var(--white); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+}
+
+/* ---------- LED: borde de luz que recorre cada recuadro ---------- */
+.pain, .service, .case, .quote, .post-card, .faq details, .post-cta { position: relative; }
+.pain::before, .service::before, .case::before, .quote::after, .post-card::before, .faq details::before, .post-cta::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 1;
+  background: conic-gradient(from var(--led), transparent 0 72%, rgba(0,163,255,.6) 82%, var(--cyan) 90%, #FFFFFF 93%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 4px var(--cyan));
+  animation: led-spin 6s linear infinite;
+}
+.pain:nth-child(2n)::before, .service:nth-child(2n)::before, .post-card:nth-child(2n)::before { animation-delay: -2s; }
+.pain:nth-child(3n)::before, .service:nth-child(3n)::before, .post-card:nth-child(3n)::before { animation-delay: -4s; }
+.faq details:nth-child(2n)::before { animation-delay: -3s; }
+@keyframes led-spin { to { --led: 360deg; } }
+
+/* Luz que sigue al cursor dentro de cada recuadro */
+.pain, .service, .post-card, .quote { background-image: radial-gradient(260px circle at var(--mx, -300px) var(--my, -300px), rgba(0, 231, 255, .16), transparent 60%); }
+
+/* ---------- LED: línea de luz que cruza cada sección ---------- */
+.section::after, .trust::after, .cta::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, var(--cyan), #FFFFFF, var(--cyan), transparent) -30% 0 / 30% 100% no-repeat,
+    linear-gradient(90deg, transparent, rgba(0,163,255,.35), transparent);
+  box-shadow: 0 0 12px rgba(0, 231, 255, .45);
+  animation: led-sweep 7s linear infinite;
+}
+.section:nth-of-type(2n)::after { animation-direction: reverse; animation-duration: 9s; }
+@keyframes led-sweep { from { background-position: -30% 0, 0 0; } to { background-position: 130% 0, 0 0; } }
+
+/* ---------- LED: rieles laterales y barra de progreso ---------- */
+.led-rail {
+  position: fixed; top: 0; bottom: 0; width: 2px; z-index: 40; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(0,163,255,.25) 15%, rgba(0,163,255,.25) 85%, transparent);
+}
+.led-rail--l { left: 10px; }
+.led-rail--r { right: 10px; }
+.led-rail--r::before, .led-rail--r::after {
+  content: ""; position: absolute; left: -1px; width: 4px; height: 120px; border-radius: 4px;
+  background: linear-gradient(180deg, transparent, var(--cyan), #FFFFFF);
+  box-shadow: var(--glow); animation: rail-run 5s linear infinite;
+}
+.led-rail--r::after { animation-delay: -2.5s; background: linear-gradient(180deg, transparent, var(--sky), var(--cyan)); }
+@keyframes rail-run { from { top: -140px; } to { top: 100%; } }
+.led-rail__runner { /* luz que baja según el scroll */
+  position: absolute; left: -4px; width: 10px; height: 10px; border-radius: 50%;
+  top: calc(var(--p, 0) * (100% - 10px));
+  background: #FFFFFF; box-shadow: 0 0 6px #fff, 0 0 14px var(--cyan), 0 0 30px var(--sky);
+}
+.led-rail__runner::before { /* estela */
+  content: ""; position: absolute; left: 4px; bottom: 8px; width: 2px; height: 90px;
+  background: linear-gradient(0deg, var(--cyan), transparent);
+}
+.scroll-led {
+  position: fixed; left: 0; top: 0; height: 3px; width: 100%; z-index: 70; pointer-events: none;
+  transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--sky), var(--cyan), #FFFFFF);
+  box-shadow: 0 0 8px var(--cyan), 0 0 20px rgba(0,231,255,.6);
+}
+
+/* ---------- Hero: dron animado y animaciones de entrada ---------- */
+.hero { overflow: hidden; }
+.hero-drone {
+  position: absolute; right: max(2vw, calc((100vw - 1200px) / 2 - 40px)); top: 22%;
+  width: min(31vw, 440px); z-index: 0; pointer-events: none;
+  animation: drone-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(0, 231, 255, .45));
+}
+.hero-drone .prop { transform-box: fill-box; transform-origin: center; animation: prop-spin .18s linear infinite; }
+.hero-drone .prop:nth-of-type(2n) { animation-direction: reverse; }
+.hero-drone .beam { transform-box: fill-box; transform-origin: 50% 0; animation: beam 3s ease-in-out infinite; }
+.hero-drone .led-dot { animation: blink 1.2s steps(2, jump-none) infinite; }
+.hero-drone .led-dot:nth-of-type(2n) { animation-delay: .6s; }
+@keyframes drone-float {
+  0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+  50% { transform: translate(-18px, -26px) rotate(2deg); }
+}
+@keyframes prop-spin { 0% { transform: scaleX(1); } 50% { transform: scaleX(.15); } 100% { transform: scaleX(1); } }
+@keyframes beam { 0%, 100% { opacity: .25; transform: scaleY(.9); } 50% { opacity: .55; transform: scaleY(1.05); } }
+@keyframes blink { 0% { opacity: 1; } 100% { opacity: .15; } }
+.hero__inner { position: relative; z-index: 1; }
+@media (min-width: 901px) { .hero h1 { max-width: 13ch; font-size: clamp(2.8rem, 5.6vw, 5.3rem); } }
+
+.rec {
+  display: inline-flex; align-items: center; gap: 8px; margin-left: 14px; padding: 4px 10px; border-radius: 999px;
+  font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .72rem; letter-spacing: .12em; color: var(--white);
+  border: 1px solid rgba(255,255,255,.25); background: rgba(4,4,74,.4); vertical-align: middle;
+}
+.rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #FF3B5C; box-shadow: 0 0 8px #FF3B5C; animation: blink 1s steps(2, jump-none) infinite; }
+
+.hero__inner > *, .page-hero .container > * { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+.hero__inner > :nth-child(2), .page-hero .container > :nth-child(2) { animation-delay: .12s; }
+.hero__inner > :nth-child(3), .page-hero .container > :nth-child(3) { animation-delay: .24s; }
+.hero__inner > :nth-child(4), .page-hero .container > :nth-child(4) { animation-delay: .36s; }
+.hero__inner > :nth-child(5) { animation-delay: .48s; }
+@keyframes rise { from { opacity: 0; transform: translateY(28px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+
+.hero .script, .cta .script { text-shadow: 0 0 18px rgba(0, 231, 255, .6); }
+.display .script { animation: neon 4s ease-in-out infinite; }
+@keyframes neon { 0%, 100% { text-shadow: 0 0 10px rgba(0,231,255,.45); } 50% { text-shadow: 0 0 22px rgba(0,231,255,.9), 0 0 40px rgba(0,163,255,.5); } }
+
+/* Entrada de recuadros con un poco más de movimiento */
+.reveal { transform: translateY(34px) scale(.97); }
+.reveal.is-visible { transform: none; }
+
+/* Botón de WhatsApp con pulso LED */
+.wa-float { box-shadow: 0 0 0 0 rgba(0,231,255,.6), 0 12px 30px -8px rgba(0,163,255,.8); animation: wa-pulse 2.4s ease-out infinite; }
+@keyframes wa-pulse { 0% { box-shadow: 0 0 0 0 rgba(0,231,255,.55), 0 12px 30px -8px rgba(0,163,255,.8); } 100% { box-shadow: 0 0 0 22px rgba(0,231,255,0), 0 12px 30px -8px rgba(0,163,255,.8); } }
+
+@media (max-width: 900px) {
+  .hero-drone { width: 70vw; right: -16vw; top: auto; bottom: 6%; opacity: .35; }
+  .led-rail { display: none; }
+}
+@media (max-width: 600px) { .rec { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .scroll-led, .led-rail__runner { display: none; }
+}
